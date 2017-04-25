@@ -11,22 +11,27 @@ GetReview <- function(movie) {
   # Your parameters should include a "query" and an "api_key"
   # Note: the HTTR library will take care of spaces in the arguments
   # See the interactive console for more detail:https://developer.nytimes.com/movie_reviews_v2.json#/Console/GET/reviews/search.json
-  
+  uri <- "https://api.nytimes.com/svc/movies/v2/reviews/search.json"
+  query.params <- list(apikey = "c7c20f06201b4dbcb22a7cbb4d055040", query = movie)
   
   # Request data using your search query
-  
+  response <- GET(uri, query = query.params)
+  body <- fromJSON(content(response, "text"))
   
   # What type of variable does this return?
+  ## a list
   
   # Flatten the data stored in the `$results` key of the data returned to you
-  
+  results <- flatten(body$results)
   
   # From the most recent review, store the headline, short summary, and link to full article each in their own variables
-  
+  headline <- results$headline
+  summary <- results$summary_short
+  link <- results$link.url
 
   # Return an list of the three pieces of information from above
-  
+  return(list(headline = headline, summary = summary, link = link))
 }
 
 # Test that your function works with a movie of your choice
-
+in.the.loop <- GetReview("In The Loop")
