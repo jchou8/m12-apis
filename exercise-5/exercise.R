@@ -22,12 +22,13 @@ GetReview <- function(movie) {
   ## a list
   
   # Flatten the data stored in the `$results` key of the data returned to you
-  results <- flatten(body$results)
+  flattened <- flatten(body$results)
   
   # From the most recent review, store the headline, short summary, and link to full article each in their own variables
-  headline <- results$headline
-  summary <- results$summary_short
-  link <- results$link.url
+  review <- flattened[1, ]
+  headline <- review$headline
+  summary <- review$summary_short
+  link <- review$link.url
 
   # Return an list of the three pieces of information from above
   return(list(headline = headline, summary = summary, link = link))
